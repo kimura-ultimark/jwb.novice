@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/webapp</rootDir>
+    <workDir>work</workDir>
+    <exportSource>false</exportSource>
+    <reloadable>true</reloadable>
+    <redirectLogger>false</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation></warLocation>
+    <extraInfo>%3CResource%09name%3D%22jdbc%2Fjavaweb%22%0D%0A%09%09%09auth%3D%22Container%22+type%3D%22javax.sql.DataSource%22%0D%0A%09%09%09maxActive%3D%22150%22+maxIdle%3D%2250%22+maxWait%3D%2215000%22%0D%0A%09%09%09username%3D%22jwbuser%22+password%3D%22EqI%60Iay6%22+driverClassName%3D%22com.mysql.jdbc.Driver%22%0D%0A%09%09%09url%3D%22jdbc%3Amysql%3A%2F%2F192.168.1.15%3A3306%2Fjavaweb%3FcharacterEncoding%3DUTF-8%26amp%3BserverTimezone%3DJST%26amp%3BautoReconnect%3Dtrue%26amp%3BuseSSL%3Dfalse%22%2F%3E</extraInfo>
+    <mavenClasspath>false</mavenClasspath>
+    <webPath>/javaweb</webPath>
+</tomcatProjectProperties>
