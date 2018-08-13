@@ -1,3 +1,7 @@
+<%@page import="jwb.novice.javaweb.shopping.Item"%>
+<%@page import="java.util.List"%>
+<%@page import="jwb.novice.javaweb.shopping.ItemsViewModel"%>
+<%@page import="jwb.novice.javaweb.shopping.ItemSummaryView"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -33,6 +37,10 @@ td {
 </head>
 <body>
 	<h2>取扱商品一覧</h2>
+	<%
+	ItemsViewModel vm = new ItemsViewModel();
+	List<Item> items = vm.itemList();
+	%>
 	<form method="post" action="itemDetail" name="itemSelect">
 		<table>
 			<col width="15%"/>
@@ -48,8 +56,18 @@ td {
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Loop Start -->
-				<!-- Loop End -->
+				<%
+				for (Item item : items) {
+				%>
+				<tr>
+					<td><%= item.getProductCd() %></td>
+					<td><%= item.getProductdNm() %></td>
+					<td><%= item.getUnitPrice() %></td>
+					<td><button type="button" onclick="selectCode('<%= item.getProductCd() %>')">詳細</button></td>
+				</tr>
+				<%
+				}
+				%>
 			</tbody>
 		</table>
 		<input type="hidden" name="selectedCode" id="selectedCode">
