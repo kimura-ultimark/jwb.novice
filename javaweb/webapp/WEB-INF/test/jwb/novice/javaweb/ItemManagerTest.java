@@ -1,21 +1,15 @@
 package jwb.novice.javaweb;
 
-import java.util.List;
-
-import jwb.novice.javaweb.items.ItemManager;
 import jwb.novice.javaweb.shopping.Item;
-import jwb.novice.javaweb.shopping.ItemSummaryView;
+import jwb.novice.javaweb.shopping.ItemDetailViewModel;
 
 public class ItemManagerTest {
 
 	public static void main(String[] args) {
 		
-		ItemSummaryView itemManager = new ItemManager();
-		List<Item> itemList = itemManager.itemList();
+		ItemDetailViewModel vm = new ItemDetailViewModel("0004");
+		Item item = vm.itemDetail();
 		
-		for (Item item : itemList) {
-			
-			System.out.println(item.getProductCd() + " : " + item.getProductdNm());
-		}
+		System.out.println(item.getProductdNm() + " : " + item.getDescription() + " : " + item.getProductImg());
 	}
 }
