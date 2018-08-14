@@ -62,8 +62,8 @@ td {
 				<tr>
 					<td><%= item.getProductCd() %></td>
 					<td><%= item.getProductdNm() %></td>
-					<td><%= item.getUnitPrice() %></td>
-					<td><button type="button" onclick="selectCode('<%= item.getProductCd() %>')">詳細</button></td>
+					<td class="currency"><%= item.getUnitPrice() %></td>
+					<td class="currency"><button type="button" onclick="selectCode('<%= item.getProductCd() %>')">詳細</button></td>
 				</tr>
 				<%
 				}
