@@ -9,22 +9,34 @@ public class ItemDetailViewModel {
 	private String itemCd;
 	
 	
+	private Cart cart = new ShoppingCart();
+	
+	
 	public ItemDetailViewModel(String itemCd) {
 		
 		this.itemCd = itemCd;
 	}
 	
-	
 	public Item itemDetail() {
 		
-		// 商品管理システムにアクセス
 		ItemDetailView detailView = new ItemManager();
 		Item item = detailView.itemDetail(itemCd);
 		
-		// 画像管理システムにアクセス
 		ItemImageView imageView = new ImageManager();
 		imageView.itemImage(item);
 		
 		return item;
+	}
+	
+	
+	public Cart shoppingCart() {
+		
+		return cart;
+	}
+	
+	
+	public void saveCart(Cart cart) {
+		
+		this.cart = cart;
 	}
 }
