@@ -6,7 +6,7 @@ public interface Cart {
 	
 	public void add(Item item);
 	
-	public Iterator<Item> iterator();
+	public Iterator<Order> iterator();
 
 	public int size();
 }

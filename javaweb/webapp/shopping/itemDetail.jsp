@@ -1,3 +1,4 @@
+<%@page import="jwb.novice.javaweb.shopping.Order"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="jwb.novice.javaweb.shopping.Item"%>
 <%@page import="jwb.novice.javaweb.shopping.ItemDetailViewModel"%>
@@ -34,7 +35,7 @@
 }
 
 table {
-	width : 50%;
+	width : 75%;
 	border-collapse : collapse;
 }
 
@@ -82,26 +83,33 @@ function setVisiblity(isVisible) {
 			<div style="height: 90%; overflow-y: auto;">
 				<!-- ここにカートに追加された商品の一覧が表示されます。 -->
 				<table>
+					<col width="10%"/>
+					<col width="40%"/>
 					<col width="20%"/>
-					<col width="50%"/>
-					<col width="30%"/>
+					<col width="10%"/>
+					<col width="20%"/>
 					<thead>
 						<tr>
 							<td>商品コード</td>
 							<td>商品名</td>
-							<td>価格</td>
+							<td>単価</td>
+							<td>数量</td>
+							<td>購入金額</td>
 						</tr>
 					</thead>
 					<tbody>
 					<%
-					Iterator<Item> iterator = vm.shoppingCart().iterator();
+					Iterator<Order> iterator = vm.shoppingCart().iterator();
 					while (iterator.hasNext()) {
-						Item currentItem = iterator.next();
+						Order order = iterator.next();
+						Item currentItem = order.orderedItem();
 					%>
 						<tr>
 							<td><%= currentItem.getProductCd() %></td>
 							<td><%= currentItem.getProductdNm() %></td>
 							<td><%= currentItem.getUnitPrice() %></td>
+							<td><%= order.quantity() %></td>
+							<td><%= order.purchasePrice() %></td>
 						</tr>
 					<%
 					}
