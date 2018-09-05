@@ -21,7 +21,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		ItemDetailViewModel vm = new ItemDetailViewModel(req.getParameter("currentItemCd"));
 		Item item = vm.itemDetail();
 		
-		// カートに商品を追加してセッションに保存
+		// Cartに商品を追加してセッションに保存
 		cart = cart == null ? vm.shoppingCart() : cart;
 		cart.add(item);
 		req.getSession().setAttribute(Cart.class.getSimpleName(), cart);

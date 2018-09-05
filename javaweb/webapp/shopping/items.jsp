@@ -13,6 +13,10 @@ function selectCode(selectedCode) {
 	document.getElementById("selectedCode").value = selectedCode
 	document.itemSelect.submit();
 }
+
+function shoppingCartView() {
+	document.location.href = "shoppingCartView.jsp";
+}
 </script>
 <style type="text/css">
 table {
@@ -36,11 +40,20 @@ td {
 <title>取扱商品一覧</title>
 </head>
 <body>
-	<h2>取扱商品一覧</h2>
 	<%
 	ItemsViewModel vm = new ItemsViewModel();
 	List<Item> items = vm.itemList();
 	%>
+	<table>
+		<col width="50%"/>
+		<col width="50%"/>
+		<tr>
+			<td><h2>取扱商品一覧</h2></td>
+			<td style="text-align: right">
+				<button id="shoppingCartView" type="button" onclick="shoppingCartView()">ショッピングカートを見る</button>
+			</td>
+		</tr>
+	</table>
 	<form method="post" action="itemDetail" name="itemSelect">
 		<table>
 			<col width="15%"/>
