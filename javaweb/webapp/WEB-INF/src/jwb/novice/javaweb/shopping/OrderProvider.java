@@ -2,20 +2,28 @@ package jwb.novice.javaweb.shopping;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import jwb.novice.javaweb.MySQLDatabase;
+import jwb.novice.javaweb.common.NumberingStamp;
+import jwb.novice.javaweb.img.ImageManager;
+import jwb.novice.javaweb.items.ItemManager;
 
 public class OrderProvider {
 	
 	
-	public boolean accept(PurchaseOrder purchaseOrder) throws SQLException {
+	public String accept(PurchaseOrder purchaseOrder) throws SQLException {
 		
 		MySQLDatabase database = new MySQLDatabase("jdbc/javaweb");
 		Connection conn = database.connect();
 		
-		String orderNo = "0000001";
+		// String orderNo = "0000001";
+		NumberingStamp ns = new NumberingStamp("A0");
+		String orderNo = ns.orderNo();
 		
 		StringBuffer insclientInfo = new StringBuffer();
 		insclientInfo.append("INSERT INTO client_info (order_no, family_name, first_name, pref, city, address) VALUES ");
@@ -35,7 +43,7 @@ public class OrderProvider {
 			
 			conn.rollback();
 			conn.close();
-			return false;
+			return null;
 		}
 		
 		Iterator<Order> iterator = purchaseOrder.getOrderList().iterator();
@@ -60,13 +68,50 @@ public class OrderProvider {
 				
 				conn.rollback();
 				conn.close();
-				return false;
+				return null;
 			}
 		}
 		
 		conn.commit();
 		conn.close();
 		
-		return true;
+		return orderNo;
+	}
+	
+	
+	public List<Order> orderList(String orderNo) throws SQLException {
+		
+		List<Order> orderList = new ArrayList<Order>();
+		
+		MySQLDatabase database = new MySQLDatabase("jdbc/javaweb");
+		Connection conn = database.connect();
+		
+		String sql = "SELECT product_cd,quantity,purchase_amount FROM order_info WHERE order_no = ? ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, orderNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			
+			int quantity = rs.getInt("quantity");
+			String itemCd = rs.getString("product_cd"); 
+			
+			// Item detail
+			ItemDetailView itemDetailView = new ItemManager();
+			Item item = itemDetailView.itemDetail(itemCd);
+			
+			// Item image
+			ItemImageView itemImageView = new ImageManager();
+			itemImageView.itemImage(item);
+			
+			Order order = new Order(item, quantity);
+			
+			orderList.add(order);
+		}
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return orderList;
 	}
 }

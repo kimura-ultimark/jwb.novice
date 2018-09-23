@@ -3,6 +3,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS client_info;
+DROP TABLE IF EXISTS numbering_stamp;
 DROP TABLE IF EXISTS order_info;
 
 
@@ -19,6 +20,15 @@ CREATE TABLE client_info
 	city varchar(128),
 	address varchar(128),
 	PRIMARY KEY (order_no)
+);
+
+
+CREATE TABLE numbering_stamp
+(
+	prefix char(2) NOT NULL,
+	next_no decimal(8),
+	digit decimal(4),
+	PRIMARY KEY (prefix)
 );
 
 

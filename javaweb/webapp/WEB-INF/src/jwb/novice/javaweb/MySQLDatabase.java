@@ -28,6 +28,7 @@ public class MySQLDatabase {
 			// JNDIからConnectionを取得できる場合はJNDIより取得
 			DataSource ds = InitialContext.doLookup("java:comp/env/" + jndiName);
 			conn = ds.getConnection();
+			conn.setAutoCommit(false);
 			
 		} catch (NamingException e) {
 			
@@ -37,6 +38,7 @@ public class MySQLDatabase {
 			String password = "EqI`Iay6";
 			
 			conn = DriverManager.getConnection(url, user, password);
+			conn.setAutoCommit(false);
 		}
 		
 		return conn;

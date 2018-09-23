@@ -1,6 +1,7 @@
 package jwb.novice.javaweb.shopping;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,6 @@ public class PurchaseConfirmServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		
-		// 顧客情報生成
 		Client client = new Client();
 		client.setFamilyName(req.getParameter("familyName"));
 		client.setFirstName(req.getParameter("firstName"));
@@ -32,7 +32,6 @@ public class PurchaseConfirmServlet extends HttpServlet {
 		client.setCity(req.getParameter("city"));
 		client.setAddress(req.getParameter("address"));
 		
-		// 注文情報取得
 		Cart cart = (Cart)session.getAttribute(Cart.class.getSimpleName());
 		List<Order> orderList = new ArrayList<Order>();
 		
@@ -42,12 +41,25 @@ public class PurchaseConfirmServlet extends HttpServlet {
 			orderList.add(iterator.next());
 		}
 		
-		// 注文書生成
 		PurchaseOrder purchaseOrder = new PurchaseOrder(client, orderList);
+		OrderProvider provider = new OrderProvider();
 		
-		// 注文書をDB登録
+		String orderNo = "";
 		
+		try {
+			orderNo = provider.accept(purchaseOrder);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
+		if (orderNo == null) {
+			
+			req.getRequestDispatcher("/shopping/confirmPurchase.jsp").forward(req, res);
+			return;
+		}
+		
+		session.removeAttribute(Cart.class.getSimpleName());
+		req.setAttribute("orderNo", orderNo);
 		req.getRequestDispatcher("/shopping/orderResult.jsp").forward(req, res);
 	}
 }
